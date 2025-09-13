@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Follow My Live Content - TikTok</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a041a, #1a1038, #0f0823);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 10, 30, 0.85);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(126, 87, 194, 0.3);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,128C960,96,1056,96,1152,117.3C1248,139,1344,181,1392,202.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.2;
+        }
+        
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid #c77dff;
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(199, 125, 255, 0.8);
+            animation: pulse 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(199, 125, 255, 0.6); }
+            50% { box-shadow: 0 0 40px rgba(199, 125, 255, 1); }
+            100% { box-shadow: 0 0 20px rgba(199, 125, 255, 0.6); }
+        }
+        
+        .live-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: linear-gradient(45deg, #ff6b6b, #c73b3b);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #7e57c2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin: 15px 0 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            color: #e0aaff;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .instruction {
+            background: rgba(123, 75, 202, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(199, 125, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .instruction::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+        
+        .instruction h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #e0aaff;
+        }
+        
+        .instruction ol {
+            padding-left: 20px;
+        }
+        
+        .instruction li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .highlight {
+            color: #c77dff;
+            font-weight: 600;
+            background: rgba(199, 125, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .copy-section {
+            background: rgba(123, 75, 202, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(199, 125, 255, 0.3);
+            position: relative;
+        }
+        
+        .copy-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+        
+        .copy-section p {
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+        
+        .url-container {
+            display: flex;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #urlToCopy {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 15px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(to right, #7b2cbf, #5a189a);
+            border: none;
+            color: white;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(to right, #6a11cb, #4c10a3);
+        }
+        
+        .action-btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(to right, #7b2cbf, #5a189a);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 17px;
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(123, 44, 191, 0.6);
+        }
+        
+        .success-message {
+            color: #4ade80;
+            margin-top: 15px;
+            display: none;
+            font-size: 16px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .detection-message {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: rgba(106, 17, 203, 0.3);
+            display: none;
+            border: 1px solid rgba(199, 125, 255, 0.3);
+        }
+        
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(126, 87, 194, 0.1);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 15px 20px;
+            }
+            
+            .avatar-container {
+                width: 130px;
+                height: 130px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .instruction, .copy-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="circle" style="width: 80px; height: 80px; top: 10%; left: 20%;"></div>
+        <div class="circle" style="width: 120px; height: 120px; top: 20%; left: 70%;"></div>
+        <div class="circle" style="width: 60px; height: 60px; top: 60%; left: 10%;"></div>
+        <div class="circle" style="width: 100px; height: 100px; top: 70%; left: 60%;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="avatar-container">
+                <div class="avatar">
+                    <img class="avatar-img" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d29tYW4lMjBwb3J0cmFpdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Profile Avatar">
+                </div>
+                <div class="live-badge">LIVE</div>
+            </div>
+            <h1>Follow My Live Content</h1>
+            <p class="subtitle">Exclusive content waiting for you</p>
+        </div>
+        
+        <div class="content">
+            <div id="tiktok-detection" class="detection-message">
+                <i class="fas fa-info-circle"></i> Detected that you're using TikTok's in-app browser. Please follow the instructions below.
+            </div>
+            
+            <div class="instruction">
+                <h2><i class="fas fa-info-circle"></i> Access Instructions</h2>
+                <ol>
+                    <li>Tap the <span class="highlight">"•••"</span> icon in the top right corner</li>
+                    <li>Select <span class="highlight">"Open in Browser"</span> from the menu</li>
+                    <li>Enjoy the full live experience and exclusive content</li>
+                </ol>
+            </div>
+            
+            <div class="copy-section">
+                <p>Or copy the link below and open it in your browser:</p>
+                <div class="url-container">
+                    <input type="text" id="urlToCopy" value="https://savebig.pro/a/lYp5ocO19Hy4AO" readonly>
+                    <button class="copy-btn" onclick="copyUrl()"><i class="fas fa-copy"></i></button>
+                </div>
+                <button class="action-btn" onclick="copyUrl()">
+                    <i class="fas fa-link"></i> Copy Link
+                </button>
+                <p id="successMessage" class="success-message">
+                    <i class="fas fa-check-circle"></i> Link copied to clipboard!
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 Live Content · All Rights Reserved</p>
+        </div>
+    </div>
+
+    <script>
+        // 检测是否在TikTok内置浏览器中
+        function isInTikTokApp() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return /tiktok/i.test(userAgent);
+        }
+        
+        // 页面加载时检测
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isInTikTokApp()) {
+                // 在TikTok应用中，显示提示信息
+                document.getElementById('tiktok-detection').style.display = 'block';
+            } else {
+                // 不在TikTok应用中，自动跳转
+                window.location.href = 'https://savebig.pro/a/lYp5ocO19Hy4AO';
+            }
+        });
+        
+        // 复制URL功能
+        function copyUrl() {
+            const copyText = document.getElementById("urlToCopy");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            
+            const successMessage = document.getElementById("successMessage");
+            successMessage.style.display = "block";
+            
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 3000);
+        }
+        
+        // 创建背景效果
+        function createBackgroundEffects() {
+            const effectsContainer = document.querySelector('.background-effects');
+            for (let i = 0; i < 8; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                const size = Math.random() * 100 + 50;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.top = `${Math.random() * 100}%`;
+                circle.style.left = `${Math.random() * 100}%`;
+                circle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                circle.style.animationDelay = `${Math.random() * 5}s`;
+                effectsContainer.appendChild(circle);
+            }
+        }
+        
+        createBackgroundEffects();
+    </script>
+</body>
+</html>
